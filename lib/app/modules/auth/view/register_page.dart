@@ -45,7 +45,7 @@ class _RegisterContentState extends State<RegisterContent>
     super.initState();
     final controller = context.read<RegisterController>();
     controller.addListener(() {
-      showHideLoaderHelper(context, controller.showLoader);
+      showHideLoaderHelper(context, conditional: controller.showLoader);
 
       if (!isNull(controller.error)) {
         showError(message: controller.error, context: context);
@@ -54,7 +54,7 @@ class _RegisterContentState extends State<RegisterContent>
       if (controller.registerSuccess) {
         showSuccess(
             message: 'Usuário cadastrado com sucesso', context: context);
-        Future.delayed(Duration(seconds: 1), () {
+        Future.delayed(const Duration(seconds: 1), () {
           Navigator.of(context).pop();
         });
       }
@@ -77,8 +77,8 @@ class _RegisterContentState extends State<RegisterContent>
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
                         'Cadastre-se',
                         style: TextStyle(
@@ -101,7 +101,7 @@ class _RegisterContentState extends State<RegisterContent>
                       controller: emailEditingController,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
-                        if (!isEmail(value?.toString()) ?? '') {
+                        if (!isEmail(value?.toString())) {
                           return 'Email inválido';
                         }
                         return null;
@@ -112,13 +112,12 @@ class _RegisterContentState extends State<RegisterContent>
                         builder: (context, obscureTextPasswordValue, child) {
                           return PizzaDeliveryInput('Senha',
                               controller: passwordEditingController,
-                              suffixIcon: Icon(FontAwesome.key),
+                              suffixIcon: const Icon(FontAwesome.key),
                               obscureText: obscureTextPasswordValue,
                               suffixIconOnPressed: () {
-                            obscureTextPassword.value =
-                                !obscureTextPasswordValue;
+                            obscureTextPassword.value = !obscureTextPassword.value;
                           }, validator: (value) {
-                            if (isNull(value) ||
+                            if (isNull(value.toString()) ||
                                 !isLength(value.toString(), 6)) {
                               return 'Senha precisar ter no mínimo 6 caracteres';
                             }
@@ -132,11 +131,11 @@ class _RegisterContentState extends State<RegisterContent>
                           return PizzaDeliveryInput(
                             'Confirmar Senha',
                             controller: confirmPasswordEditingController,
-                            suffixIcon: Icon(FontAwesome.key),
+                            suffixIcon: const Icon(FontAwesome.key),
                             obscureText: obscureTextConfirmPasswordValue,
                             suffixIconOnPressed: () {
                               obscureTextConfirmPassword.value =
-                                  !obscureTextConfirmPasswordValue;
+                                  !obscureTextConfirmPassword.value;
                             },
                             validator: (value) {
                               if (value.toString().isEmpty) {
@@ -152,7 +151,7 @@ class _RegisterContentState extends State<RegisterContent>
                             },
                           );
                         }),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     PizzaDeliveryButton('Salvar ',
@@ -168,7 +167,7 @@ class _RegisterContentState extends State<RegisterContent>
                             passwordEditingController.text);
                       }
                     }),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     PizzaDeliveryButton(
                       'Voltar',
                       height: 50,

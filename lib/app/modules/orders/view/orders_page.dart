@@ -21,7 +21,7 @@ class _OrdersPageState extends State<OrdersPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (this.mounted) {
+      if (mounted) {
         context.read<OrdersController>().findAll();
       }
     });
@@ -29,17 +29,18 @@ class _OrdersPageState extends State<OrdersPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: RefreshIndicator(
+    return Scaffold(
+        body: RefreshIndicator(
       onRefresh: () => context.read<OrdersController>().findAll(),
       child: Consumer<OrdersController>(
         builder: (_, controller, __) {
-          showHideLoaderHelper(context, controller.showLoader);
+          showHideLoaderHelper(context, conditional: controller.showLoader);
 
           if (!isNull(controller.error)) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
+                const Center(
                   child: Text(
                       'Erro ao buscar pedidos, tente novamente mais tarde'),
                 ),
@@ -47,7 +48,7 @@ class _OrdersPageState extends State<OrdersPage>
                   onPressed: () {
                     controller.findAll();
                   },
-                  child: Text('Tentar novamente'),
+                  child: const Text('Tentar novamente'),
                 ),
               ],
             );
@@ -60,11 +61,11 @@ class _OrdersPageState extends State<OrdersPage>
               return ExpansionTile(
                 title: Text('Pedido ${order.id}'),
                 children: [
-                  Divider(),
+                  const Divider(),
                   ...order.items.map((o) {
                     return Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -74,13 +75,14 @@ class _OrdersPageState extends State<OrdersPage>
                       ),
                     );
                   }).toList(),
-                  Divider(),
+                  const Divider(),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Total'),
+                        const Text('Total'),
                         Text(_calculateTotalOrder(order)),
                       ],
                     ),

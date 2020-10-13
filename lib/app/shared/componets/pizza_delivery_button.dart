@@ -15,7 +15,9 @@ class PizzaDeliveryButton extends Container {
           width: width,
           height: height,
           child: RaisedButton(
-            onPressed: onPressed,
+            onPressed: () {
+              onPressed();
+            },
             color: buttonColor,
             child: Text(
               label,

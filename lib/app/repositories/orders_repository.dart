@@ -8,7 +8,14 @@ class OrdersRepository {
     try {
       final result =
           await Dio().get('http://192.168.0.5:8888/order/user/$userId');
-      return result.data.map<OrderModel>((o) => OrderModel.fromMap(o)).toList();
+
+      List<Map<String, dynamic>> menuList;
+
+      menuList.add(result as Map<String, dynamic>);
+
+      return menuList.map<OrderModel>((m) => OrderModel.fromMap(m)).toList();
+
+      //return result.data.map<OrderModel>((o) => OrderModel.fromMap(o)).toList();
     } on DioError catch (e) {
       print(e);
       throw RestException('Erro ao buscar pedidos');

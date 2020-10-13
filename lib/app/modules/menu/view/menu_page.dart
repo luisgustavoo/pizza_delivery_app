@@ -19,12 +19,12 @@ class MenuPage extends StatelessWidget {
               onPressed: () {
                 context.read<HomeController>().changePage(2);
               },
-              label: Text('Finalizar Pedido'),
-              icon: Icon(Icons.monetization_on),
+              label: const Text('Finalizar Pedido'),
+              icon: const Icon(Icons.monetization_on),
               backgroundColor: Theme.of(context).primaryColor,
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         },
       ),
@@ -49,7 +49,7 @@ class MenuPage extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 200,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/images/topoCardapio.png'),
                         fit: BoxFit.none)),
@@ -73,8 +73,8 @@ class MenuPage extends StatelessWidget {
   Widget _buildMenu(BuildContext context) {
     return Consumer<MenuController>(builder: (_, controller, __) {
       if (controller.showLoader) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+        return const Padding(
+          padding: EdgeInsets.only(top: 8.0),
           child: Center(child: CircularProgressIndicator()),
         );
       }
@@ -83,14 +83,14 @@ class MenuPage extends StatelessWidget {
         return Text(controller.error);
       }
 
-      var menu = controller.menu;
+      final menu = controller.menu;
 
       return Column(
         children: [
           ...menu.map<Widget>((m) {
             return _buildGroup(context, m.name, m.items);
           }).toList(),
-          SizedBox(height: 50,)
+          const SizedBox(height: 50,)
         ]
       );
 
@@ -99,25 +99,25 @@ class MenuPage extends StatelessWidget {
 
   Widget _buildGroup(
       BuildContext context, String name, List<MenuItemModel> items) {
-    var formater = NumberFormat('###.00', 'pt-BR');
+    final formatNumber = NumberFormat('###.00', 'pt-BR');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             name,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
         ),
-        Divider(),
+        const Divider(),
         ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: items.length,
           itemBuilder: (context, index) {
-            var mi = items[index];
+            final mi = items[index];
             return ListTile(
               title: Text(
                 mi.name,
@@ -125,7 +125,7 @@ class MenuPage extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold),
               ),
-              subtitle: Text('R\$ ${formater.format(mi.price)}'),
+              subtitle: Text('R\$ ${formatNumber.format(mi.price)}'),
               trailing: Consumer<ShoppingCartController>(
                 builder: (_, controllerShoppingCart, __) {
                   final itemSelected = controllerShoppingCart.itemSelected(mi);

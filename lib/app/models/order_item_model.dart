@@ -8,6 +8,17 @@ class OrderItemModel {
     this.item,
   });
 
+  factory OrderItemModel.fromMap(Map<String, dynamic> map) {
+    if (map == null) {
+      return null;
+    }
+
+    return OrderItemModel(
+      id: map['id'] as int,
+      item: MenuItemModel.fromMap(map['item'] as Map<String, dynamic>),
+    );
+  }
+
   final int id;
   final MenuItemModel item;
 
@@ -18,17 +29,7 @@ class OrderItemModel {
     };
   }
 
-  factory OrderItemModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return OrderItemModel(
-      id: map['id'],
-      item: MenuItemModel.fromMap(map['item']),
-    );
-  }
 
   String toJson() => json.encode(toMap());
 
-  factory OrderItemModel.fromJson(String source) =>
-      OrderItemModel.fromMap(json.decode(source));
 }

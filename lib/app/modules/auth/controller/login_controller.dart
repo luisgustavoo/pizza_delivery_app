@@ -18,7 +18,7 @@ class LoginController extends ChangeNotifier {
     try {
       final user = await _authRepository.login(email, password);
       final sp = await SharedPreferences.getInstance();
-      sp.setString('user', user.toJson());
+      await sp.setString('user', user.toJson());
       showLoader = false;
       loginSuccess = true;
     } on RestException catch (e) {

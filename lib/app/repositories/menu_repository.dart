@@ -6,7 +6,14 @@ class MenuRepository {
   Future<List<MenuModel>> findAll() async {
     try {
       final response = await Dio().get('http://192.168.0.5:8888/menu');
-      return response.data.map<MenuModel>((m) => MenuModel.fromMap(m)).toList();
+
+      List<Map<String, dynamic>> menuList;
+
+      menuList.add(response as Map<String, dynamic>);
+
+      return menuList.map<MenuModel>((m) => MenuModel.fromMap(m)).toList();
+
+      //return response.data.map<MenuModel>( (m) => MenuModel.fromMap(m)).toList();
     } on DioError catch (e) {
       print(e);
       throw RestException('Erro ao buscar cardápio');

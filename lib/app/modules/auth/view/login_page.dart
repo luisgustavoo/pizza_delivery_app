@@ -43,7 +43,7 @@ class _LoginContentState extends State<LoginContent>
     super.initState();
     final loginController = context.read<LoginController>();
     loginController.addListener(() {
-      showHideLoaderHelper(context, loginController.showLoader);
+      showHideLoaderHelper(context, conditional: loginController.showLoader);
 
       if (!isNull(loginController.error)) {
         showError(message: loginController.error, context: context);
@@ -79,7 +79,7 @@ class _LoginContentState extends State<LoginContent>
                       controller: emailEditingController,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
-                        if (!isEmail(value?.toString()) ?? '') {
+                        if (!isEmail(value?.toString())) {
                           return 'Email inválido';
                         }
 
@@ -93,7 +93,7 @@ class _LoginContentState extends State<LoginContent>
                           return PizzaDeliveryInput(
                             'Password',
                             controller: passwordEditingController,
-                            suffixIcon: Icon(FontAwesome.key),
+                            suffixIcon: const Icon(FontAwesome.key),
                             obscureText: obscurePasswordValueNotifierValue,
                             suffixIconOnPressed: () {
                               obscurePasswordValueNotifier.value =
@@ -107,9 +107,7 @@ class _LoginContentState extends State<LoginContent>
                             },
                           );
                         }),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     PizzaDeliveryButton(
                       'Login',
                       height: 50,
@@ -125,12 +123,12 @@ class _LoginContentState extends State<LoginContent>
                         }
                       },
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     FlatButton(
                         onPressed: () {
                           Navigator.of(context).pushNamed(RegisterPage.router);
                         },
-                        child: Text(
+                        child: const Text(
                           'Cadastre-se',
                           style: TextStyle(fontSize: 20, fontFamily: 'Arial'),
                         )),

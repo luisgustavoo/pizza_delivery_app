@@ -3,6 +3,21 @@ import 'dart:convert';
 class MenuItemModel {
   MenuItemModel({this.id, this.name, this.price});
 
+  factory MenuItemModel.fromMap(Map<String, dynamic> map) {
+    if (map != null) {
+      return null;
+    }
+
+    return MenuItemModel(
+      id: map['id'] as int,
+      name: map['name'] as String,
+      price: map['price'] as double,
+    );
+  }
+
+  factory MenuItemModel.fromJson(String source) =>
+      MenuItemModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
   final int id;
   final String name;
   final double price;
@@ -15,24 +30,13 @@ class MenuItemModel {
     };
   }
 
-  factory MenuItemModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return MenuItemModel(
-      id: map['id'],
-      name: map['name'],
-      price: map['price'],
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory MenuItemModel.fromJson(String source) =>
-      MenuItemModel.fromMap(json.decode(source));
 
   @override
   bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+    if (identical(this, o)) {
+      return true;
+    }
 
     return o is MenuItemModel &&
         o.id == id &&

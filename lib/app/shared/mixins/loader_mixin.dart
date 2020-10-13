@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 abstract class LoaderMixin {
   bool loaderOpen = false;
 
-  showHideLoaderHelper(BuildContext context, bool conditional) {
+  void showHideLoaderHelper(BuildContext context, {bool conditional}) {
     if (conditional) {
       showLoader(context);
     } else {
@@ -11,8 +11,8 @@ abstract class LoaderMixin {
     }
   }
 
-  showLoader(BuildContext context) {
-    if (context == null) return;
+   Future<void> showLoader(BuildContext context) async {
+    assert(context != null);
 
     if (!loaderOpen) {
       loaderOpen = true;
@@ -25,7 +25,7 @@ abstract class LoaderMixin {
                 width: 20,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [CircularProgressIndicator()],
+                  children: const [CircularProgressIndicator()],
                 ),
               );
             });
@@ -33,7 +33,7 @@ abstract class LoaderMixin {
     }
   }
 
-  hideLoader(BuildContext context) {
+  void hideLoader(BuildContext context) {
     if (context != null && loaderOpen) {
       loaderOpen = false;
       Navigator.of(context).pop();

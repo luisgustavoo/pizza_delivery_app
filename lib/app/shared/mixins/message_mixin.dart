@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 abstract class MessageMixin {
   final scaffoldGlobalKey = GlobalKey<ScaffoldState>();
 
-  showError(
+  void showError(
           {@required String message,
           BuildContext context,
           GlobalKey<ScaffoldState> key}) =>
       _showSnackBar(context, message, key: key, color: Colors.red);
 
-  showSuccess(
+  void showSuccess(
           {@required String message,
           BuildContext context,
           GlobalKey<ScaffoldState> key}) =>

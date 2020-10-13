@@ -32,7 +32,7 @@ class _SplashContentState extends State<SplashContent> {
   @override
   void initState() {
     super.initState();
-    var controller = context.read<SplashController>();
+    final controller = context.read<SplashController>();
     
     controller.addListener(() {
       switch(controller.logged){

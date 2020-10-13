@@ -28,19 +28,20 @@ class _ShoppingCartState extends State<ShoppingCart>
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final controller = context.read<ShoppingCartController>();
-      if (this.mounted) {
+      if (mounted) {
         context.read<ShoppingCartController>().loadPage();
 
         controller.addListener(() async {
-          showHideLoaderHelper(context, controller.showLoading);
+          showHideLoaderHelper(context, conditional: controller.showLoading);
 
           if (!isNull(controller.error)) {
             showError(context: context, message: controller.error);
           }
 
           if (controller.success) {
-            showSuccess(context: context, message: 'Pedido realizado com sucesso');
-            Future.delayed(Duration(seconds: 1), () {
+            showSuccess(
+                context: context, message: 'Pedido realizado com sucesso');
+            Future.delayed(const Duration(seconds: 1), () {
               controller.clearShoppingCart();
               context.read<HomeController>().changePage(1);
             });
@@ -61,17 +62,17 @@ class _ShoppingCartState extends State<ShoppingCart>
                 : Column(
                     children: [
                       ListTile(
-                        title: Text('Nome'),
+                        title: const Text('Nome'),
                         subtitle: Text('${controller?.user?.name ?? ''}'),
                       ),
-                      Divider(),
+                      const Divider(),
                       _buildShoppingCartItems(context, controller),
-                      Divider(),
+                      const Divider(),
                       ListTile(
-                        title: Text('Endereço de entrega'),
+                        title: const Text('Endereço de entrega'),
                         subtitle: Text(controller.address ?? ''),
                         trailing: FlatButton(
-                          onPressed: () => changeAddress(),
+                          onPressed: changeAddress,
                           child: Text(
                             'alterar',
                             style: TextStyle(
@@ -80,10 +81,10 @@ class _ShoppingCartState extends State<ShoppingCart>
                         ),
                       ),
                       ListTile(
-                        title: Text('Tipo de pagamento'),
+                        title: const Text('Tipo de pagamento'),
                         subtitle: Text(controller.paymentType ?? ''),
                         trailing: FlatButton(
-                          onPressed: () => changePaymentType(),
+                          onPressed: changePaymentType,
                           child: Text(
                             'alterar',
                             style: TextStyle(
@@ -91,10 +92,10 @@ class _ShoppingCartState extends State<ShoppingCart>
                           ),
                         ),
                       ),
-                      Divider(),
+                      const Divider(),
                       //Expanded(child: Container()),
                       PizzaDeliveryButton(
-                        'Finaliza pedido',
+                        'Finalizar pedido',
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: 50.0,
                         buttonColor: Theme.of(context).primaryColor,
@@ -102,9 +103,7 @@ class _ShoppingCartState extends State<ShoppingCart>
                         labelSize: 18,
                         onPressed: () => controller.checkout(),
                       ),
-                      SizedBox(
-                        height: 20,
-                      )
+                      const SizedBox(height: 20)
                     ],
                   ),
           );
@@ -120,27 +119,27 @@ class _ShoppingCartState extends State<ShoppingCart>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
+        const Padding(
+          padding: EdgeInsets.only(left: 15),
           child: Text(
             'Pedido',
             style: TextStyle(fontSize: 16),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         ...items.map<ShoppingCartItem>((i) => ShoppingCartItem(i)).toList(),
-        Divider(),
+        const Divider(),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Total'),
+              const Text('Total'),
               Text('${formatNumber.format(controller?.totalPrice ?? 0.0)}')
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         FlatButton(
             onPressed: () => controller.clearShoppingCart(),
             child: Text('Limpar carrinho',
@@ -152,7 +151,7 @@ class _ShoppingCartState extends State<ShoppingCart>
   Widget _buildClearShoppingCart(BuildContext context) {
     return Center(
       child: Column(
-        children: [
+        children: const [
           Icon(AntDesign.shoppingcart, size: 200),
           Text('Seu carrinho está vazio'),
         ],
@@ -164,14 +163,14 @@ class _ShoppingCartState extends State<ShoppingCart>
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Endereço de Entrega'),
+        title: const Text('Endereço de Entrega'),
         content: TextField(
           controller: addressEditingController,
         ),
         actions: [
           RaisedButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
+            child: const Text('Cancelar'),
           ),
           RaisedButton(
             onPressed: () {
@@ -180,7 +179,7 @@ class _ShoppingCartState extends State<ShoppingCart>
                   .changeAddress(addressEditingController.text);
               Navigator.pop(context);
             },
-            child: Text('Alterar'),
+            child: const Text('Alterar'),
           )
         ],
       ),
@@ -194,15 +193,15 @@ class _ShoppingCartState extends State<ShoppingCart>
           final controller = context.read<ShoppingCartController>();
           paymentTypeSelected.value = controller.paymentType;
           return AlertDialog(
-            title: Text('Tipo de Pagamento'),
+            title: const Text('Tipo de Pagamento'),
             content: Container(
               height: 150,
               child: ValueListenableBuilder(
                 valueListenable: paymentTypeSelected,
                 builder: (_, paymentTypeSelectedValue, __) {
                   return RadioButtonGroup(
-                    picked: paymentTypeSelectedValue,
-                    labels: <String>[
+                    picked: paymentTypeSelectedValue as String,
+                    labels: const [
                       'Cartão de Crédito',
                       'Cartão de Debito',
                       'Dinheiro'
@@ -217,7 +216,7 @@ class _ShoppingCartState extends State<ShoppingCart>
             actions: [
               RaisedButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('Cancelar'),
+                child: const Text('Cancelar'),
               ),
               RaisedButton(
                 onPressed: () {
@@ -226,7 +225,7 @@ class _ShoppingCartState extends State<ShoppingCart>
                       .changePaymentType(paymentTypeSelected.value);
                   Navigator.pop(context);
                 },
-                child: Text('Alterar'),
+                child: const Text('Alterar'),
               )
             ],
           );

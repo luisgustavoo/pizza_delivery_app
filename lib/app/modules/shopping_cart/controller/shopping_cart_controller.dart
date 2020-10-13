@@ -36,7 +36,7 @@ class ShoppingCartController extends ChangeNotifier {
     notifyListeners();
 
     final sp = await SharedPreferences.getInstance();
-    user = UserModel.fromJson(sp.get('user'));
+    user = UserModel.fromJson(sp.get('user') as String);
 
     _showLoading = false;
     notifyListeners();
@@ -47,7 +47,7 @@ class ShoppingCartController extends ChangeNotifier {
   double get totalPrice =>
       itemsSelected.fold(0.0, (total, item) => total += item.price);
 
-  bool get hasItemSelected => itemsSelected.length > 0;
+  bool get hasItemSelected => itemsSelected.isNotEmpty;
 
   void addOrRemoveItem(MenuItemModel item) {
     if (itemSelected(item)) {

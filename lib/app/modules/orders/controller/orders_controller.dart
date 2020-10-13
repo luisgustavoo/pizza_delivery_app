@@ -17,8 +17,8 @@ class OrdersController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      SharedPreferences sp = await SharedPreferences.getInstance();
-      final user = UserModel.fromJson(sp.get('user'));
+      final sp = await SharedPreferences.getInstance();
+      final user = UserModel.fromJson(sp.get('user') as String);
 
       orders = await _repository.findMyOrders(user.id);
     } on RestException catch (e) {

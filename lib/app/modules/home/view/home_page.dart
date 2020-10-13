@@ -54,7 +54,7 @@ class _HomeContentState extends State<HomeContent>
         title: ValueListenableBuilder(
             valueListenable: _tabSelected,
             builder: (_, _tabSelectedValue, __) {
-              return Text('${_titles[_tabSelectedValue]}');
+              return Text('${_titles[_tabSelectedValue as int]}');
             }),
         centerTitle: true,
       ),
@@ -68,7 +68,7 @@ class _HomeContentState extends State<HomeContent>
             ChangeNotifierProvider(create: (_) => ShoppingCartController()),
           ],
           child: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             controller: controller.tabController,
             children: [
               MenuPage(),
@@ -77,11 +77,11 @@ class _HomeContentState extends State<HomeContent>
               FlatButton(
                   onPressed: () async {
                     final sp = await SharedPreferences.getInstance();
-                    sp.clear();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
+                    await sp.clear();
+                    await Navigator.of(context).pushNamedAndRemoveUntil(
                         SplashPage.router, (route) => false);
                   },
-                  child: Text(
+                  child: const Text(
                     'Sair',
                     style: TextStyle(fontSize: 20),
                   )),
@@ -96,9 +96,9 @@ class _HomeContentState extends State<HomeContent>
         buttonBackgroundColor: Colors.white,
         items: <Widget>[
           Image.asset('assets/images/logo.png', width: 30),
-          Icon(FontAwesome.list),
-          Icon(FontAwesome.shopping_cart),
-          Icon(Icons.settings),
+          const Icon(FontAwesome.list),
+          const Icon(FontAwesome.shopping_cart),
+          const Icon(Icons.settings),
         ],
         onTap: (index) {
           controller.tabController.animateTo(index);

@@ -12,11 +12,15 @@ class PizzaDeliveryInput extends TextFormField {
   }) : super(
           controller: controller,
           keyboardType: keyboardType,
-          obscureText: obscureText,
+          obscureText: obscureText as bool,
           decoration: InputDecoration(
-              labelText: label,
+              labelText: label as String,
               suffixIcon: suffixIcon != null
-                  ? IconButton(icon: suffixIcon, onPressed: suffixIconOnPressed)
+                  ? IconButton(
+                      icon: suffixIcon,
+                      onPressed: () {
+                        suffixIconOnPressed();
+                      })
                   : null),
           validator: validator,
         );

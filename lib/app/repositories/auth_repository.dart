@@ -9,7 +9,7 @@ class AuthRepository {
       final response = await Dio().post('http://192.168.0.5:8888/user/auth',
           data: {'email': email, 'password': password});
 
-      return UserModel.fromMap(response.data);
+      return UserModel.fromMap(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       print(e);
       String message = 'Erro ao autenticar o usuário';

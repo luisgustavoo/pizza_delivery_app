@@ -10,6 +10,23 @@ class OrderModel {
     this.items,
   });
 
+  factory OrderModel.fromMap(Map<String, dynamic> map) {
+    if (map == null) {
+      return null;
+    }
+
+    return OrderModel(
+      id: map['id'] as int,
+      paymentType: map['paymentType'] as String,
+      address: map['address'] as String,
+      items: List<OrderItemModel>.from(
+          map['items']?.map((x) => OrderItemModel.fromMap(x as Map<String, dynamic>)) as Iterable),
+    );
+  }
+
+  factory OrderModel.fromJson(String source) =>
+      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
   final int id;
   final String paymentType;
   final String address;
@@ -24,20 +41,8 @@ class OrderModel {
     };
   }
 
-  factory OrderModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return OrderModel(
-      id: map['id'],
-      paymentType: map['paymentType'],
-      address: map['address'],
-      items: List<OrderItemModel>.from(
-          map['items']?.map((x) => OrderItemModel.fromMap(x))),
-    );
-  }
 
   String toJson() => json.encode(toMap());
 
-  factory OrderModel.fromJson(String source) =>
-      OrderModel.fromMap(json.decode(source));
+
 }
